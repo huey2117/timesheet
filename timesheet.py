@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import xlsxwriter
 from datetime import timedelta, datetime, date
+import pandas.io.formats.excel
 
 
 def get_payperiod_dates(start_date):
@@ -41,6 +42,7 @@ def main():
             start_date + timedelta(days=1),
             periods=6,
             freq='D').strftime('%a %b %d')
+
         main_df = pd.DataFrame(columns=main_headers, index=main_index)
         a = main_df.columns.str.split(' - ', expand=True).values
         main_df.columns = pd.MultiIndex.from_tuples([x for x in a])
@@ -62,12 +64,16 @@ def main():
         # define some formatting
         background_color = '#FFFFFF'
         font_color = '#000000'
+        font_name = 'Garamond'
+        font_size = 11
         bold = writer.book.add_format(
             {
                 'bold': 1,
                 'font_color': font_color,
                 'bg_color': background_color,
-                'border': 1
+                'border': 1,
+                'font_name': font_name,
+                'font_size': font_size
             }
         )
         string_format = writer.book.add_format(
@@ -75,7 +81,9 @@ def main():
                 'font_color': font_color,
                 'bg_color': background_color,
                 'border': 1,
-                'align': 'center'
+                'align': 'center',
+                'font_name': font_name,
+                'font_size': font_size
             }
         )
 
@@ -85,7 +93,9 @@ def main():
                 'font_color': font_color,
                 'bg_color': background_color,
                 'align': 'center',
-                'border': 1
+                'border': 1,
+                'font_name': font_name,
+                'font_size': font_size
             }
         )
 
@@ -96,7 +106,9 @@ def main():
                 'bg_color': background_color,
                 'border': 1,
                 'top': 2,
-                'align': 'center'
+                'align': 'center',
+                'font_name': font_name,
+                'font_size': font_size
             }
         )
 
